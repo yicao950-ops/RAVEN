@@ -172,6 +172,28 @@
             text-align: center;
             padding: 30px;
             margin-top: 50px;
+            position: relative;
+        }
+        
+        /* 隐藏的线索样式 */
+        .hidden-clue {
+            color: #2c3e50; /* 与页脚背景色完全相同，实现隐形 */
+            font-size: 14px;
+            font-family: 'Courier New', Courier, monospace;
+            margin-top: 20px;
+            cursor: text;
+            user-select: all; /* 允许用户轻易选中 */
+        }
+        /* 当用户拖拽鼠标选中该文本时触发的样式 */
+        .hidden-clue::selection {
+            background-color: #ff3333; /* 红色高亮背景 */
+            color: #ffffff; /* 白色文字 */
+            text-shadow: 0 0 5px #000;
+        }
+        /* 适配其他浏览器 */
+        .hidden-clue::-moz-selection {
+            background-color: #ff3333;
+            color: #ffffff;
         }
 
         /* ================= 隐藏层：RAVEN 数据库样式 ================= */
@@ -255,7 +277,6 @@
             backdrop-filter: blur(5px);
         }
         
-        /* 旅游网通用提示框 */
         .travel-modal {
             background: #fff;
             width: 400px;
@@ -276,7 +297,6 @@
             cursor: pointer;
         }
 
-        /* RAVEN 生平框 */
         .raven-modal {
             background: #0a0a0a;
             border: 1px solid #ff3333;
@@ -347,8 +367,7 @@
 
         <div id="dynamic-search-results">
             <h2 class="section-title" id="search-result-title">搜索结果</h2>
-            <div class="grid-cards" id="search-result-cards">
-                </div>
+            <div class="grid-cards" id="search-result-cards"></div>
         </div>
 
         <div class="content-section">
@@ -387,6 +406,7 @@
         <div class="travel-footer">
             <p>© 2026 Global Wanderlust 环球自由行. All rights reserved.</p>
             <p style="font-size: 12px; color: #95a5a6;">本网站提供最优质的旅行服务，致力于您的出行安全与完美体验。</p>
+            <div class="hidden-clue">TERMINAL OVERRIDE CODE: RAVEN IN SKY</div>
         </div>
     </div>
 
@@ -395,8 +415,7 @@
             <h1>R.A.V.E.N. COMMAND PROTOCOL</h1>
             <p style="color: #8b0000;">ENCRYPTED NETWORK | ACCESS GRANTED - SQUADRON LEADERS DATABANK</p>
         </div>
-        <div class="roster-grid" id="roster-grid">
-            </div>
+        <div class="roster-grid" id="roster-grid"></div>
     </div>
 
     <div class="modal-overlay" id="travel-modal-overlay">
@@ -418,7 +437,9 @@
     </div>
 
     <script>
-        // RAVEN 7名退役军人队长数据（已更新为欧美名字及背景）
+        // 开发者控制台彩蛋：给喜欢按 F12 的极客留下的线索
+        console.log("%c[SYSTEM INTERCEPT] Looking for the truth? Search the exact phrase: RAVEN IN SKY", "color: #ff3333; font-size: 16px; font-weight: bold; background: #000; padding: 10px; border: 1px solid #ff3333;");
+
         const captains = [
             {
                 codename: "守夜人 (NIGHT WATCH)",
@@ -457,14 +478,12 @@
             }
         ];
 
-        // 监听搜索栏回车键
         document.getElementById('search-input').addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
                 processSearch();
             }
         });
 
-        // 核心搜索逻辑
         function processSearch() {
             const inputVal = document.getElementById('search-input').value.trim();
             const upperInput = inputVal.toUpperCase();
@@ -474,17 +493,13 @@
                 return;
             }
 
-            // 触发隐藏机制
             if (upperInput === "RAVEN IN SKY") {
                 triggerRavenProtocol();
-            } 
-            // 正常的地点搜索伪装
-            else {
+            } else {
                 generateFakeSearchResults(inputVal);
             }
         }
 
-        // 生成假的旅游搜索结果
         function generateFakeSearchResults(keyword) {
             const resultsDiv = document.getElementById('dynamic-search-results');
             const titleEl = document.getElementById('search-result-title');
@@ -530,7 +545,6 @@
             resultsDiv.scrollIntoView({ behavior: 'smooth' });
         }
 
-        // ================= 伪装网：通用提示框控制 =================
         function showTravelMsg(title, desc) {
             document.getElementById('travel-modal-title').innerText = title;
             document.getElementById('travel-modal-desc').innerText = desc;
@@ -540,7 +554,6 @@
             document.getElementById('travel-modal-overlay').style.display = 'none';
         }
 
-        // ================= RAVEN 系统控制 =================
         function triggerRavenProtocol() {
             const travelSite = document.getElementById('travel-site');
             const ravenSite = document.getElementById('raven-site');
